@@ -14,6 +14,10 @@ public class DaoFactory {
 		return new WineDaoImpl(ds);
 	}
 
+	public static UserDao createUserDao() {
+		return new UserDaoImpl(getDataSource());
+	}
+
 	/**
 	 * DataSourceを作るメソッド
 	 */
