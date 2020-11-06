@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.DaoFactory;
+import dao.UserDao;
+import domain.User;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -34,6 +38,22 @@ public class LoginServlet extends HttpServlet {
 		String loginPass = request.getParameter("login_pass");
 		System.out.println(loginId);
 		System.out.println(loginPass);
+
+		// DBを参照し、ログインIDとPassが正しいか確認する
+		UserDao dao = DaoFactory.createUserDao();
+		User user = null;
+		try {
+			user = dao.findByLoginAndLoginPass(loginId, loginPass);
+		}
+		 catch(Exception e) {
+			 e.printStackTrace();
+		 }
+
+		if(user != null) {
+			System.out.println("成功");
+		}else {
+			System.out.println("失敗");
+		}
 	}
 
 }
